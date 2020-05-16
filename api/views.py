@@ -1,16 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from django.contrib.auth.hashers import make_password
 
 from .models import Task
 from .serializers import TaskSerializer
 from datetime import date
 
 # Create your views here.
+def HomeView(request):
+    return HttpResponse('Welcome! Please see readme.md of the repository for the routes')
+
 class ListTasks(APIView):
     permission_classes = [permissions.IsAuthenticated]
     authentication_classes = [authentication.TokenAuthentication]
@@ -24,7 +28,7 @@ class ListTasks(APIView):
 def register_user(request):
     user_instance = User(
         username = request.data['username'],
-        password = request.data['password'],
+        password = make_password(request.data['password']),
         email = request.data['email']
     )
     user_instance.save()

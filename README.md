@@ -19,3 +19,11 @@ You should have Python3 installed on your computer
 	"email": <email>
    }`
  
+# Obtain auth token
+- POST http://127.0.0.1:8000/api-token-auth/
+- This will require JSON object whith `username` and `password` as key and will return a Token. Make sure you have already registered and the credentials are right.
+- For example:
+ `{
+	"username": <username>,
+	"password": <username>
+}`

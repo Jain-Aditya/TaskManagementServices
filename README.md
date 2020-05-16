@@ -27,3 +27,19 @@ You should have Python3 installed on your computer
 	"username": <username>,
 	"password": <username>
 }`
+
+# Create a Task
+- POST http://127.0.0.1:8000/create-task/
+- This will required user to be logged in.
+- For clients to authenticate, the token key should be included in the Authorization HTTP header. The key should be prefixed   by the string literal "Token", with whitespace separating the two strings. For example:
+
+`Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b`
+
+- The input data should be JSON with keys `task_description`, `due_date`, `label` and `status`
+- For example:
+- `{
+	"task_description": "This is a test task",
+	"due_date": "2020-12-12",
+	"label": "personal",
+	"status": "done"
+}`

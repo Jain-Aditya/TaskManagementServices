@@ -6,10 +6,13 @@ from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.hashers import make_password
+from django.db import IntegrityError
+from rest_framework import status
 
 from .models import Task
 from .serializers import TaskSerializer
 from datetime import date
+
 
 # Create your views here.
 def HomeView(request):
@@ -31,7 +34,12 @@ def register_user(request):
         password = make_password(request.data['password']),
         email = request.data['email']
     )
-    user_instance.save()
+    try:
+        user_instance.save()
+    except IntegrityError:
+        return Response({'message': 'Username already exists'})
+    except:
+        return Response({'message': 'User could not be created. Please contact Aditya Jain'})
     Token.objects.create(user=user_instance)
     token = Token.objects.get(user=user_instance)
     response_object = {
